@@ -17,14 +17,17 @@
 |#
 
 #|
-Representation of pathes
+Representation of pathes:
 ((A B) (B C) (C D) (D E))
+for the start node:
 ((A A))
-Pathes are managed backwards.
+for A => B:
+((B A) (A A))
+for A => B => C:
+((C B) (B A) (A A))
 |#
 
-
-(defparameter *relations* '
+(defparameter *edges* '
   ( (A (B C))
     (B (A C E D))
     (C (A B D E))
@@ -36,77 +39,78 @@ Pathes are managed backwards.
 
 
 #|
-check if (A B) is in path
+check if (A B) has been traversed
 |#
-(defun is-segment-p (tupel path)
+(defun is-traversal-p (tupel path)
   (find tupel path :test #'equal)
 )
 
 #|
-swap tuple values. (A B) => (B A) => (A B)
+(A B) => (B A)
 |#
 (defun swap (tupel)
   (list (cadr tupel) (car tupel))
 )
 
 #|
-check if (A B) or (B A) are in path 
+check if (A B) or (B A) have been traversed
 |#
-(defun is-traversed-relation (tupel path)
-  (or (is-segment-p tupel path) (is-segment-p (swap tupel) path)) 
-)
-
-(may-go (node path) ()
-	
+(defun is-bidirectional-traversal-p (tupel path)
+  (or (is-traversal-p tupel path) (is-traversal-p (swap tupel) path)) 
 )
 
 #|
-determines the end-node of the path. See above about the structure of pathes
+((E D) (D C)) => E
 |#
-(defun first-node (path)
+(defun last-visited-node (path)
   (car (car path))
-)
-
-
-
-#|
-in: ((a b) (c d))
-Must be called with a list of lists
-out: the relations of a. path is inverse
-out: a list, for example (B C)
-|#
-(defun get-relations (path)
-  (
-   car(cdr(assoc (first-node path) *relations*)))
   )
 
-(defun next-path (path node) ()
-	  (push (list node (first-node path)) path)
+#|
+((E D) (D B)) => (C B D)
+|#
+(defun get-edges (path)
+  (
+   car(cdr(assoc (last-visited-node path) *edges*)))
+  )
 
+#|
+((A B) (C D)) => ((X A) (A B) (C D))
+|#
+(defun add-step (path node) ()
+       (push (list node (last-visited-node path)) path)
        )
 
 #|
-path: ( (a b) (b c))
+any given path => solution
+((A A)) => ...
+((E D) (D C) (C C)) => ...
 |#
 (defun iterate-impl (path) 
-  (if (equal (length path) 8)
+  (if (equal (length path) 9)
       (push path *solutions*)
-    (loop for node in (get-relations path) do
-	  (if (is-traversed-relation (list node (first-node path)) path)
+    (loop for node in (get-edges path) do
+	  (if (is-bidirectional-traversal-p (list node (last-visited-node path)) path)
 	  ()
-	  (iterate-impl (next-path path node))
+	  (iterate-impl (add-step path node))
 	  ))))
 
 
+#|
+(A B E) => all solutions of given nodes
+|#
+(defun nikolaus (nodes)
+  (defparameter *solutions* ())
+  (loop for i in nodes do
+	(iterate-impl (list (list i i)))
+	)
+  )
 
-(defun iterate (xs)
-  (iterate-impl (list (list xs xs)))
-)))
+(defun lets-go ()
+  (nikolaus '(A B C D E))
+  (print "Solutions:")
+  (print *solutions*)
+  (print (list "Number of solutions found:" (length *solutions*)))
+ )
 
-
-(defun nikolaus ()
-  (loop for i in '(A B C D E) do
-	(if i
-	    (iterate i))))
-
-
+(lets-go)
