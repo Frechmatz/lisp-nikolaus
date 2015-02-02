@@ -1,6 +1,7 @@
 # lisp-nikolaus
 Solution of 'Haus vom Nikolaus' implemented in Lisp
 
-Work in progress.
+(lets-go) => Calculates all solutions
 
-Haut noch zuviele Lösungen raus:(
+An interactive mode where a start node can be chosen and pretty-printing of pathes is in work.
+
