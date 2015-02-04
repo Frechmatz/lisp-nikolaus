@@ -83,9 +83,8 @@ any given path => solution
   (if (equal (length path) 9)
       (push path *solutions*)
     (loop for node in (get-edges path) do
-	  (if (is-bidirectional-traversal-p (list node (last-visited-node path)) path)
-	  ()
-	  (iterate-impl (add-step path node))
+	  (if (not (is-bidirectional-traversal-p (list node (last-visited-node path)) path))
+		   (iterate-impl (add-step path node))
 	  ))))
 
 
