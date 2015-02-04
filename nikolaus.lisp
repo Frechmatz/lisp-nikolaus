@@ -8,23 +8,19 @@
 |#
 
 #|
-	/*
-	 * 			A
-	 * 	B				C
-	 * 			
-	 * 	D				E
-	 */
+ 			A
+ 	B				C
+	D				E
 |#
 
 #|
 Representation of pathes:
-((A B) (B C) (C D) (D E))
 for the start node:
-((A A))
+==> ((A A))
 for A => B:
-((B A) (A A))
+==> ((B A) (A A))
 for A => B => C:
-((C B) (B A) (A A))
+==> ((C B) (B A) (A A))
 |#
 
 (defparameter *edges* '
