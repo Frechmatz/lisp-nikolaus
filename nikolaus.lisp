@@ -46,17 +46,10 @@ check if (A B) has been traversed
 )
 
 #|
-(A B) => (B A)
-|#
-(defun swap (tupel)
-  (list (cadr tupel) (car tupel))
-)
-
-#|
 check if (A B) or (B A) have been traversed
 |#
 (defun is-bidirectional-traversal-p (tupel path)
-  (or (is-traversal-p tupel path) (is-traversal-p (swap tupel) path)) 
+  (or (is-traversal-p tupel path) (is-traversal-p (reverse tupel) path)) 
 )
 
 #|
@@ -98,20 +91,24 @@ any given path => solution
 
 #|
 (A B E) => all solutions of given nodes
+alternative implementation:
+(mapcar #'(lambda (node) (iterate-impl (list (list node node)))) nodes)
 |#
 (defun nikolaus (nodes)
   (defparameter *solutions* ())
   (loop for i in nodes do
 	(iterate-impl (list (list i i)))
 	)
+
   )
 
 (defun lets-go ()
   (nikolaus '(A B C D E))
   (print "Solutions:")
-  (print *solutions*)
+  (print (mapcar #'(lambda (path) (reverse (mapcar #'car path))) *solutions*))
   (print (list "Number of solutions found:" (length *solutions*)))
  )
 
 (lets-go)
+
 
