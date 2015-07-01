@@ -18,3 +18,8 @@ On the REPL command prompt enter
 
 All solutions will be printed out.
 
+### Screenshots
+
+![Screenshot](https://raw.github.com/frechmatz/lisp-nikolaus/master/doc/screenshot.jpg)
+
+
