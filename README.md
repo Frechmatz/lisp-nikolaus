@@ -1,5 +1,5 @@
 # lisp-nikolaus
-#### Solution of 'Haus vom Nikolaus' implemented in Lisp
+#### Solution of 'Haus vom Nikolaus' implemented in Lisp. Calculates all 88 solutions.
 
 ### Installation
 
