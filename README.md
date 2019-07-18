@@ -1,6 +1,8 @@
 # lisp-nikolaus
 #### 'Haus vom Nikolaus' implemented in Common Lisp. Calculates all 88 solutions.
 
+2019-07-18 Added new version of [Nikolausi](./nikolausv2.lisp) :smiley:
+
 ### Installation
 
 Download nikolaus.lisp
