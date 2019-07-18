@@ -56,7 +56,6 @@
       pathes)))
 
 (defun lets-go ()
-  (setf *count* 0)
   (let ((pathes
 	 (concatenate
 	  'list
